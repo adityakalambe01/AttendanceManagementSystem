@@ -2,7 +2,8 @@ package com.attendancemanagementsystem.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.attendancemanagementsystem.entity.Department;
 
 @Repository
-public interface Student extends JpaRepository<Student, Long> {
+public interface DepartmentRepository extends JpaRepository<Department, Long> {
 }
