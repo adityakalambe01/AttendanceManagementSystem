@@ -24,7 +24,7 @@ public class AttendanceRecord {
     @Column(name = "attendance_date")
     private LocalDate attendanceDate;
 
-    @Column(name = "attendance_status")
+    @Column(name = "attendance_status", columnDefinition = "varchar(255) default 'Absent'")
     private String attendanceStatus;
 
 }
