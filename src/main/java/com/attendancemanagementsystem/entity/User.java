@@ -26,7 +26,7 @@ public class User {
     private String userPassword;
 
     @Column(name = "email")
-    private Long userEmailId;
+    private String userEmailId;
 
     @Column(name = "role", columnDefinition = "varchar(255) default 'student'")
     private String userRole;
