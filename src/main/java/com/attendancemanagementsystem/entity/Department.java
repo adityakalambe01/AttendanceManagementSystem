@@ -19,5 +19,4 @@ public class Department {
     @Column(name = "name")
     private String departmentName;
 
-
 }
