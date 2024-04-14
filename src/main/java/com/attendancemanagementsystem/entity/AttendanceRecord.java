@@ -15,6 +15,9 @@ import java.time.LocalDate;
 public class AttendanceRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long attendanceId;
+
     @Column(name = "student_id")
     private Long studentId;
 
