@@ -125,7 +125,11 @@ public class UserService {
 
     /*
     *
-    *
+    * User Login
     *
     * */
+
+    public User userLogin(User user){
+        return userRepository.findByUserEmailId(user.getUserEmailId());
+    }
 }
