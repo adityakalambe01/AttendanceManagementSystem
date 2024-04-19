@@ -69,7 +69,7 @@ public class UserService {
     * Update existing user
     *
     * */
-    public User updateExistingUser(long userId, User browserUser){
+    public User updateExistingUser(Long userId, User browserUser){
         User dbuser;
         try {
             dbuser = userRepository.findById(userId).get();
