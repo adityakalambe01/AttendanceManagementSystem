@@ -74,8 +74,10 @@ public class DepartmentService {
     public boolean deleteDepartment(Long departmentId){
         if (departmentRepository.existsById(departmentId)){
             departmentRepository.deleteById(departmentId);
+            return true;
         }
-        return true;
+        return false;
+
     }
 
     /*
