@@ -4,6 +4,8 @@ import com.attendancemanagementsystem.entity.Department;
 import com.attendancemanagementsystem.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,6 +19,7 @@ public class DepartmentController {
     * Add New Department
     *
     * */
+    @PostMapping("add")
     public String addNewDepartment(Department department) {
         return departmentService.addDepartment(department)? "": null;
     }
@@ -26,6 +29,7 @@ public class DepartmentController {
     * Update Department
     *
     * */
+    @PostMapping("update")
     public String updateDepartment(Long departmentId, Department updatedDepartment) {
         return departmentService.updateDepartment(departmentId, updatedDepartment)? "": null;
     }
@@ -35,6 +39,7 @@ public class DepartmentController {
     * Delete Department
     *
     * */
+    @RequestMapping("delete")
     public String deleteDepartment(Long departmentId) {
         return departmentService.deleteDepartment(departmentId)? "": null;
     }
@@ -44,6 +49,7 @@ public class DepartmentController {
     * Search Department
     *
     * */
+    @GetMapping("search")
     public String searchDepartment(Long departmentId) {
         return null;
     }
@@ -53,6 +59,7 @@ public class DepartmentController {
     * All Department
     *
     * */
+    @GetMapping("list")
     public String getAllDepartments() {
         return null;
     }
