@@ -28,6 +28,6 @@ public class User {
     @Column(name = "email")
     private String userEmailId;
 
-    @Column(name = "role", columnDefinition = "varchar(255) default 'student'")
+    @Column(name = "role")
     private String userRole;
 }
