@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #6f6fdb;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .sidebar h2:hover {
+            background-color: rgba(86, 86, 168, 0.6);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 10px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(86, 86, 168, 0.6);
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .dark-mode {
+            background-color: #222;
+            color: #ddd;
+        }
+
+        .dark-mode .sidebar {
+            background-color: #333;
+        }
+
+        .dark-mode .sidebar a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h2 onclick="toggleDarkMode()">Dashboard</h2>
+    <ul>
+        <li><a href="#departments">Departments</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#faculty">Faculty</a></li>
+        <li><a href="#students">Students</a></li>
+        <li><a href="#attendance">Attendance</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <!-- Your content goes here -->
+    <h2>Welcome to the Admin Dashboard!</h2>
+    <p>Select an option from the sidebar to get started.</p>
+</div>
+
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
+</body>
+</html>
