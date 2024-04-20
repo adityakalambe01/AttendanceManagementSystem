@@ -32,16 +32,17 @@ public class UserService {
     *
     * */
     public Boolean addNewUser(User newUser){
-        try{
-            if(new UserService().checkUserIsPresent(newUser)){
-                throw new UserException("User already exists!");
-            }
-            userRepository.save(newUser);
-
-        }catch(UserException e){
-            System.out.println(e.getMessage());
-            return false;
-        }
+//        try{
+//            if(new UserService().checkUserIsPresent(newUser)){
+//                throw new UserException("User already exists!");
+//            }
+//            userRepository.save(newUser);
+//
+//        }catch(UserException e){
+//            System.out.println(e.getMessage());
+//            return false;
+//        }
+        userRepository.save(newUser);
         return true;
     }
 
@@ -130,6 +131,7 @@ public class UserService {
     * */
 
     public User userLogin(User user){
-        return userRepository.findByUserEmailId(user.getUserEmailId());
+//        return userRepository.findByUserEmailId(user.getUserEmailId());
+        return userRepository.findByUsername(user.getUsername());
     }
 }
