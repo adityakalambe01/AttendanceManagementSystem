@@ -26,10 +26,12 @@ public class UserController {
     * User Signup
     *
     * */
+
+
     @PostMapping("signUp")
     public String addNewUser(User newUser){
         if(userService.addNewUser(newUser)){
-            return "Welcome";
+            return "index";
         }
         return redirect.userSignUpPage();
     }
@@ -47,7 +49,17 @@ public class UserController {
             return redirect.userSignInPage();
         } else if (userLogin.getUserPassword().equals(user.getUserPassword())) {
             //correct password entered
-            return redirect.welcomePage();
+
+
+            //admin dashboard
+            if (userLogin.getUserRole().equalsIgnoreCase("admin"))
+                return redirect.adminDashboard();
+            //faculty dashboard
+            else if (userLogin.getUserRole().equalsIgnoreCase("faculty"))
+                return redirect.adminDashboard();
+            //student dashboard
+            else
+                return redirect.adminDashboard();
         }else {
             //wrong password entered
             return redirect.userSignInPage();
