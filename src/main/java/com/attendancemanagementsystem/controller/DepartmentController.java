@@ -1,27 +1,30 @@
 package com.attendancemanagementsystem.controller;
 
+import com.attendancemanagementsystem.controller.page.PageRedirect;
 import com.attendancemanagementsystem.entity.Department;
 import com.attendancemanagementsystem.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("department")
 public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
+    @Autowired
+    private PageRedirect pageRedirect;
 
     /*
     *
     * Add New Department
     *
     * */
-    @PostMapping("add")
-    public String addNewDepartment(Department department) {
-        return departmentService.addDepartment(department)? "": null;
+    @PostMapping("department-added")
+    public String addNewDepartment(Department department, Model model) {
+        return departmentService.addDepartment(department)? pageRedirect.getAllDepartments(model): pageRedirect.somethingWentWrong();
     }
 
     /*
@@ -29,9 +32,10 @@ public class DepartmentController {
     * Update Department
     *
     * */
-    @PostMapping("update")
-    public String updateDepartment(Long departmentId, Department updatedDepartment) {
-        return departmentService.updateDepartment(departmentId, updatedDepartment)? "": null;
+    @PostMapping("department-updated")
+    public String updateDepartment(Long departmentId, Department updatedDepartment, Model model) {
+        return departmentService.updateDepartment(departmentId, updatedDepartment)?
+                pageRedirect.getAllDepartments(model): pageRedirect.somethingWentWrong();
     }
 
     /*
@@ -39,9 +43,9 @@ public class DepartmentController {
     * Delete Department
     *
     * */
-    @RequestMapping("delete")
-    public String deleteDepartment(Long departmentId) {
-        return departmentService.deleteDepartment(departmentId)? "": null;
+    @RequestMapping("delete-department")
+    public String deleteDepartment(Long departmentId, Model model) {
+        return departmentService.deleteDepartment(departmentId)? pageRedirect.getAllDepartments(model): pageRedirect.somethingWentWrong();
     }
 
     /*
@@ -49,7 +53,7 @@ public class DepartmentController {
     * Search Department
     *
     * */
-    @GetMapping("search")
+    @GetMapping("search-department")
     public String searchDepartment(Long departmentId) {
         return null;
     }
@@ -59,8 +63,8 @@ public class DepartmentController {
     * All Department
     *
     * */
-    @GetMapping("list")
-    public String getAllDepartments() {
-        return null;
+    @GetMapping({"list-department", "departments"})
+    public String getAllDepartments(Model model) {
+        return pageRedirect.getAllDepartments(model);
     }
 }

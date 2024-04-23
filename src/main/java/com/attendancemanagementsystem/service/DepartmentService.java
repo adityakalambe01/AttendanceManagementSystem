@@ -29,6 +29,7 @@ public class DepartmentService {
             }
 
             departmentRepository.save(department);
+            return true;
 
         }catch (DepartmentException departmentException){
             System.out.println(
@@ -53,6 +54,9 @@ public class DepartmentService {
 
             department.setDepartmentName(
                     updatedDepartment.getDepartmentName().trim()
+            );
+            department.setHeadOfDepartment(
+                    updatedDepartment.getHeadOfDepartment()
             );
             departmentRepository.save(department);
             return true;
@@ -97,5 +101,14 @@ public class DepartmentService {
     * */
     public List<Department> getAllDepartment(){
         return departmentRepository.findAll();
+    }
+
+    /*
+    *
+    * By Id
+    *
+    * */
+    public Department getDepartmentById(Long departmentId){
+        return departmentRepository.findById(departmentId).get();
     }
 }

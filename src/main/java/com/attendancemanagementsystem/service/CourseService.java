@@ -3,6 +3,7 @@ package com.attendancemanagementsystem.service;
 import com.attendancemanagementsystem.customexceptions.CourseException;
 import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.repository.CourseRepository;
+import com.attendancemanagementsystem.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import java.util.NoSuchElementException;
 public class CourseService {
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     /*
     *
@@ -22,6 +25,10 @@ public class CourseService {
     public boolean addNewCourse(Course newCourse){
         newCourse.setCourseName(
                 newCourse.getCourseName().trim()
+        );
+        newCourse.setDepartmentName(departmentRepository.findById(newCourse.getDepartmentId())
+                                    .get()
+                                    .getDepartmentName()
         );
         courseRepository.save(newCourse);
         return true;
@@ -58,6 +65,11 @@ public class CourseService {
             );
             dbCourse.setCourseCredits(
                     updatedCourse.getCourseCredits()
+            );
+            dbCourse.setDepartmentName(
+                    departmentRepository.findById(updatedCourse.getDepartmentId())
+                                        .get()
+                                        .getDepartmentName()
             );
 
             courseRepository.save(dbCourse);

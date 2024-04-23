@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,10 +24,12 @@
             color: white;
             text-align: center;
             cursor: pointer;
+            width: 100%;
+            letter-spacing: 3px;
         }
 
         .sidebar h2:hover {
-            background-color: rgba(86, 86, 168, 0.6);
+            /*background-color: rgba(86, 86, 168, 0.6);*/
         }
 
         .sidebar ul {
@@ -45,6 +47,8 @@
             display: block;
             padding: 10px;
             transition: 0.3s;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         .sidebar a:hover {
@@ -68,14 +72,58 @@
         .dark-mode .sidebar a:hover {
             background-color: #555;
         }
+
+        /* Style for square-shaped sections */
+        section {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: relative; /* Ensure the content is positioned relative to the parent */
+            transition: background-color 0.3s; /* Add transition effect */
+        }
+
+        /* Dark mode style for square-shaped sections */
+        .dark-mode section {
+            background-color: #333;
+            color: #ddd;
+        }
+
+        /* Hover effect for sections */
+        section:hover {
+            background-color: #ddd; /* Change background color on hover */
+        }
+
+        .dark-mode section:hover {
+            background-color: #666; /* Change background color on hover in dark mode */
+        }
+
+        /* Style for total count div */
+        .total-count{
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            /*background-color: #6f6fdb;*/
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 25px;
+            font-weight: bold;
+            /* Hide initially */
+            /*display: none; */
+        }
+        .dark-mode .total-count{
+            color: white;
+        }
     </style>
 </head>
 <body>
 <div class="sidebar">
-    <h2 onclick="toggleDarkMode()">Dashboard</h2>
+    <h2 onclick="toggleDarkMode()" id="admin_dashboard" th:text="${adminName}"></h2>
     <ul>
-        <li><a href="#departments">Departments</a></li>
-        <li><a href="#courses">Courses</a></li>
+        <li><a href="departments">Departments</a></li>
+        <li><a href="courses">Courses</a></li>
         <li><a href="#faculty">Faculty</a></li>
         <li><a href="#students">Students</a></li>
         <li><a href="#attendance">Attendance</a></li>
@@ -83,9 +131,40 @@
 </div>
 
 <div class="content">
-    <!-- Your content goes here -->
     <h2>Welcome to the Admin Dashboard!</h2>
-    <p>Select an option from the sidebar to get started.</p>
+
+    <!-- Department Section -->
+    <section id="departments">
+        <h2>Departments</h2>
+        <!-- Add content related to departments here -->
+        <div class="total-count" id="department-count" th:text="${totalDepartments}"></div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses">
+        <h2>Courses</h2>
+        <!-- Add content related to courses here -->
+        <div class="total-count" id="course-count" th:text="${totalCourses}"></div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section id="faculty">
+        <h2>Faculty</h2>
+        <!-- Add content related to faculty here -->
+        <div class="total-count" id="faculty-count">0</div>
+    </section>
+
+    <!-- Students Section -->
+    <section id="students">
+        <h2>Students</h2>
+        <!-- Add content related to students here -->
+    </section>
+
+    <!-- Attendance Section -->
+    <section id="attendance">
+        <h2>Attendance</h2>
+        <!-- Add content related to attendance here -->
+    </section>
 </div>
 
 <script>

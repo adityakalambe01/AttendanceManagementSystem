@@ -24,4 +24,7 @@ public class Course {
 
     @Column(name = "dept_id")
     private Long departmentId;
+
+    @Column(name = "department_name")
+    private String departmentName;
 }

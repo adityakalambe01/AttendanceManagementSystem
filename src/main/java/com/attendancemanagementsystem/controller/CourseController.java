@@ -1,6 +1,7 @@
 package com.attendancemanagementsystem.controller;
 
 import ch.qos.logback.core.model.Model;
+import com.attendancemanagementsystem.controller.page.PageRedirect;
 import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("course")
 public class CourseController {
     @Autowired
     CourseService courseService;
+    @Autowired
+    private PageRedirect pageRedirect;
 
     /*
     *
     * Add New Course
     *
     * */
-    @PostMapping("add")
+    @PostMapping("course-added")
     public String addNewCourse(Course course) {
 
         return courseService.addNewCourse(course)? "redirect:/course/list":"redirect:/course/add";
@@ -31,7 +33,7 @@ public class CourseController {
     * Delete Course
     *
     * */
-    @PostMapping("delete")
+    @PostMapping("course-deleted")
     public String deleteCourse(Long courseId) {
         return courseService.deleteCourse(courseId)? "redirect:/course/list":"redirect:/course/delete";
     }
@@ -41,7 +43,7 @@ public class CourseController {
     * Update Course
     *
     * */
-    @PostMapping("update")
+    @PostMapping("course-updated")
     public String updateCourse(Long courseId, Course course) {
         return courseService.updateCourse(courseId, course)? "redirect:/course/list":"redirect:/course/update";
     }
@@ -51,19 +53,20 @@ public class CourseController {
     * Get Course by Id
     *
     * */
-    @GetMapping("id")
-    public String getCourseById(Long courseId, Model model) {
-
-        return "";
-    }
+//    @GetMapping("id")
+//    public String getCourseById(Long courseId, Model model) {
+//
+//        return "";
+//    }
 
     /*
     *
     * Get All Courses
     *
     * */
-    public String getAllCourses(){
-        return null;
+    @GetMapping("courses")
+    public String getAllCourses(org.springframework.ui.Model model){
+        return pageRedirect.getAllCourses(model);
     }
 
     /*
@@ -71,7 +74,7 @@ public class CourseController {
     * Course By Name
     *
     * */
-    public String getCourseByName(String courseName){
+    public String getCourseByName(String courseName, org.springframework.ui.Model model){
 
         return null;
     }

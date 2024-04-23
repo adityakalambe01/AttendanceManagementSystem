@@ -18,16 +18,19 @@
             left: 0;
             background-color: #6f6fdb;
             padding-top: 20px;
+            padding-bottom: 50px; /* Added padding for department button */
         }
 
         .sidebar h2 {
             color: white;
             text-align: center;
             cursor: pointer;
+            width: 100%;
+            letter-spacing: 3px;
         }
 
         .sidebar h2:hover {
-            background-color: rgba(86, 86, 168, 0.6);
+            /*background-color: rgba(86, 86, 168, 0.6);*/
         }
 
         .sidebar ul {
@@ -45,6 +48,8 @@
             display: block;
             padding: 10px;
             transition: 0.3s;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
         .sidebar a:hover {
@@ -68,18 +73,39 @@
         .dark-mode .sidebar a:hover {
             background-color: #555;
         }
+
+        /* Style for department button */
+        .department-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .department-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
 <div class="sidebar">
-    <h2 onclick="toggleDarkMode()">Dashboard</h2>
+    <h2 onclick="toggleDarkMode()" id="admin_dashboard">Admin</h2>
     <ul>
-        <li><a href="#departments">Departments</a></li>
-        <li><a href="#courses">Courses</a></li>
-        <li><a href="#faculty">Faculty</a></li>
-        <li><a href="#students">Students</a></li>
-        <li><a href="#attendance">Attendance</a></li>
+        <li><a href="departments">Departments</a></li>
+        <li><a href="courses">Courses</a></li>
+        <li><a href="faculty">Faculty</a></li>
+        <li><a href="students">Students</a></li>
+        <li><a href="attendance">Attendance</a></li>
     </ul>
+
 </div>
 
 <div class="content">
@@ -87,7 +113,8 @@
     <h2>Welcome to the Admin Dashboard!</h2>
     <p>Select an option from the sidebar to get started.</p>
 </div>
-
+<!-- Department button -->
+<button class="department-button">Add Faculty</button>
 <script>
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');

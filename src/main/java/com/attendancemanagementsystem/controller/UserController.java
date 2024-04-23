@@ -5,6 +5,7 @@ import com.attendancemanagementsystem.entity.User;
 import com.attendancemanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("users/")
+//@RequestMapping("users/")
 public class UserController {
     @Autowired
     UserService userService;
@@ -41,8 +42,8 @@ public class UserController {
     * User Login
     *
     * */
-    @PostMapping("login")
-    public String userLogin(User user){
+    @PostMapping({"user-login","admin-login","faculty-login","student-login"})
+    public String userLogin(User user, Model model){
         User userLogin = userService.userLogin(user);
         if(userLogin==null){
             //Invalid user email id
@@ -52,14 +53,16 @@ public class UserController {
 
 
             //admin dashboard
-            if (userLogin.getUserRole().equalsIgnoreCase("admin"))
-                return redirect.adminDashboard();
+            if (userLogin.getUserRole().equalsIgnoreCase("admin")) {
+                model.addAttribute("adminName",userLogin.getUserFullName());
+                return redirect.adminDashboard(model);
+            }
             //faculty dashboard
             else if (userLogin.getUserRole().equalsIgnoreCase("faculty"))
-                return redirect.adminDashboard();
+                return redirect.adminDashboard(model);
             //student dashboard
             else
-                return redirect.adminDashboard();
+                return redirect.adminDashboard(model);
         }else {
             //wrong password entered
             return redirect.userSignInPage();

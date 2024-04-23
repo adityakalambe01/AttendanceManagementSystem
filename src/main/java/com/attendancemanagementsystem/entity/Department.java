@@ -19,4 +19,7 @@ public class Department {
     @Column(name = "name")
     private String departmentName;
 
+    @Column(name = "head_of_department")
+    private String headOfDepartment;
+
 }
