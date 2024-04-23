@@ -1,10 +1,22 @@
 package com.attendancemanagementsystem.controller.page;
 
+import com.attendancemanagementsystem.entity.Department;
+import com.attendancemanagementsystem.service.CourseService;
+import com.attendancemanagementsystem.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PageRedirect {
+    @Autowired
+    DepartmentService departmentService;
+
+    @Autowired
+    CourseService courseService;
+
+
     @RequestMapping({"", "/"})
     public String indexPage(){
         return "index";
@@ -28,42 +40,59 @@ public class PageRedirect {
 
     //dashboard main
     @RequestMapping({"adminDashboard","dashboardAdmin"})
-    public String adminDashboard(){
+    public String adminDashboard(Model model){
+        model.addAttribute("totalDepartments",departmentService.getAllDepartment().stream().count());
         return "admin/dashboard";
     }
 
     //department
     @RequestMapping({"addDepartment","addNewDepartment","newDepartment","new_dept"})
     public String addNewDepartment(){
-        return "admin/department/add";
+        return "admin/department/AddDepartment";
     }
 
-    @RequestMapping({"viewDepartment","showDepartment","view_dept"})
-    public String viewDepartment(){
-        return "admin/department/view";
+    @RequestMapping({"view-Department","showDepartment","view_dept","viewDepartment"})
+    public String viewDepartment(Long departmentId, Model model){
+        Department department = departmentService.getDepartmentById(departmentId);
+        model.addAttribute("departmentId",department.getDepartmentId());
+        model.addAttribute("departmentName",department.getDepartmentName());
+        model.addAttribute("headOfDepartment",department.getHeadOfDepartment());
+        return "admin/department/ViewDepartment";
+    }
+
+    public String getAllDepartments(Model model){
+        model.addAttribute("allDepartments",departmentService.getAllDepartment());
+        return "admin/department/AllDepartments";
+    }
+
+    //Courses
+    public String getAllCourses(Model model){
+        model.addAttribute("allCourses",courseService.getAllCourse());
+        return "admin/courses/AllCourses";
     }
 
     //faculty
     @RequestMapping({"addFaculty","addNewFaculty","newFaculty","new_fact"})
     public String addNewFaculty(){
-        return "admin/faculty/add";
+        return "admin/faculty/AddFaculty";
     }
 
     @RequestMapping({"viewFaculty","showFaculty","view_fact"})
     public String viewFaculty(){
-        return "admin/faculty/view";
+        return "admin/faculty/ViewFaculty";
     }
 
     //student
     @RequestMapping({"addStudent","addNewStudent","newStudent","new_stud"})
     public String addNewStudent(){
-        return "admin/student/add";
+        return "admin/student/AddStudent";
     }
 
     @RequestMapping({"viewStudent","showStudent","view_stud"})
     public String viewStudent(){
-        return "admin/student/view";
+        return "admin/student/ViewStudent";
     }
+
 
 
 
@@ -83,6 +112,14 @@ public class PageRedirect {
     @RequestMapping("welcomePage")
     public String welcomePage(){
         return "welcome";
+    }
+
+
+
+
+    @RequestMapping("something-went-wrong")
+    public String somethingWentWrong(){
+        return "SomethingWentWrong";
     }
 
 }
