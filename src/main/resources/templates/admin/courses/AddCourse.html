@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,7 +89,7 @@
             background-color: #333;
         }
 
-        .form-container input[type=text] {
+        .form-container input[type=text], .form-container input[type=number], .input-group {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
@@ -97,7 +97,7 @@
             border-radius: 3px;
         }
 
-        .form-container input[type=text]:focus {
+        .form-container input[type=text]:focus, .form-container input[type=number]:focus, .input-group:focus {
             outline: none;
             border-color: #6f6fdb;
         }
@@ -115,6 +115,8 @@
         .form-container input[type=submit]:hover {
             background-color: #555;
         }
+
+
     </style>
 </head>
 <body>
@@ -131,16 +133,26 @@
 
 <div class="content">
     <!-- Your content goes here -->
-    <h2>Add New Department</h2>
+    <h2>Add New Course</h2>
 
     <!-- Form for adding a new department -->
     <div class="form-container light-mode">
         <form id="addDepartmentForm" method="post" >
-            <label for="departmentName">Department Name:</label><br>
-            <input type="text" id="departmentName" name="departmentName" required><br>
-            <label for="departmentHeadName">Department Head Name:</label><br>
-            <input type="text" id="departmentHeadName" name="headOfDepartment" required><br><br>
-            <input type="submit" value="Add Department" formaction="department-added">
+            <label for="courseName">Course Name:</label><br>
+            <input type="text" id="courseName" name="courseName" required><br>
+
+            <div >
+                <label for="departmentId">Department Name:</label>
+                <select id="departmentId" name="departmentId" class="input-group" style="width: 100% !important;" required>
+                    <!-- Populate this dropdown with department options from your backend -->
+                    <option value="">Select Department</option>
+                    <!-- Use Thymeleaf to iterate over departments -->
+                    <option th:each="department : ${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Add Course" formaction="course-added">
+
         </form>
     </div>
 </div>

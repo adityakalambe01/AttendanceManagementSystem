@@ -89,7 +89,7 @@
             background-color: #333;
         }
 
-        .form-container input[type=text] {
+        .form-container input[type=text], .form-container input[type=number], .input-group {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
@@ -97,7 +97,7 @@
             border-radius: 3px;
         }
 
-        .form-container input[type=text]:focus {
+        .form-container input[type=text]:focus, .form-container input[type=number]:focus, .input-group:focus {
             outline: none;
             border-color: #6f6fdb;
         }
@@ -110,27 +110,13 @@
             border-radius: 3px;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-right: 10px; /* Added margin */
         }
 
         .form-container input[type=submit]:hover {
             background-color: #555;
         }
 
-        /* Added style for the "Go Back" button */
-        .form-container button {
-            background-color: #ccc;
-            color: #333;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
 
-        .form-container button:hover {
-            background-color: #999;
-        }
     </style>
 </head>
 <body>
@@ -147,19 +133,28 @@
 
 <div class="content">
     <!-- Your content goes here -->
-    <h2>View / Update Department</h2>
+    <h2>View / Update Course</h2>
 
-    <!-- Form for updating department -->
+    <!-- Form for adding a new department -->
     <div class="form-container light-mode">
-        <form id="addDepartmentForm" method="post">
-            <input type="hidden" name="departmentId" th:value="${departmentId}" style="display: none">
-            <label for="departmentName">Department Name:</label><br>
-            <input type="text" id="departmentName" name="departmentName" th:value="${departmentName}" required><br>
-            <label for="departmentHeadName">Department Head Name:</label><br>
-            <input type="text" id="departmentHeadName" name="headOfDepartment" th:value="${headOfDepartment}" required><br><br>
+        <form id="addDepartmentForm" method="post" >
+            <input type="hidden" name="courseId" th:value="${currentCourse.courseId}" style="display: none">
 
-            <input type="submit" value="Update Department" formaction="department-updated">
-            <button type="button" onclick="goBack()">Go Back</button>
+            <label for="courseName">Course Name:</label><br>
+            <input type="text" id="courseName" name="courseName" th:value="${currentCourse.courseName}" required><br>
+
+            <div>
+                <label for="departmentId">Department:</label>
+                <select id="departmentId" name="departmentId" class="input-group" style="width: 100% !important;" required>
+                    <!-- Populate this dropdown with department options from your backend -->
+                    <option value="">Select Department</option>
+                    <!-- Use Thymeleaf to iterate over departments -->
+                    <option th:each="department : ${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}" th:selected="${department.departmentId == defaultDepartmentId}"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Update Course" formaction="course-added">
+
         </form>
     </div>
 </div>
@@ -171,11 +166,6 @@
         body.classList.toggle('dark-mode');
         formContainer.classList.toggle('dark-mode');
         formContainer.classList.toggle('light-mode');
-    }
-
-    function goBack() {
-        // Implement go back functionality
-        window.history.back();
     }
 </script>
 </body>
