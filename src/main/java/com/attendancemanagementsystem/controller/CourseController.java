@@ -1,11 +1,12 @@
 package com.attendancemanagementsystem.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.attendancemanagementsystem.controller.page.PageRedirect;
 import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.service.CourseService;
+import com.attendancemanagementsystem.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CourseController {
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    DepartmentService departmentService;
     @Autowired
     private PageRedirect pageRedirect;
 
@@ -23,9 +27,9 @@ public class CourseController {
     *
     * */
     @PostMapping("course-added")
-    public String addNewCourse(Course course) {
+    public String addNewCourse(Course course, Model model) {
 
-        return courseService.addNewCourse(course)? "redirect:/course/list":"redirect:/course/add";
+        return courseService.addNewCourse(course)? pageRedirect.getAllCourses(model) : pageRedirect.somethingWentWrong();
     }
 
     /*
@@ -33,9 +37,9 @@ public class CourseController {
     * Delete Course
     *
     * */
-    @PostMapping("course-deleted")
-    public String deleteCourse(Long courseId) {
-        return courseService.deleteCourse(courseId)? "redirect:/course/list":"redirect:/course/delete";
+    @GetMapping("course-deleted")
+    public String deleteCourse(Long courseId, Model model) {
+        return courseService.deleteCourse(courseId)? pageRedirect.getAllCourses(model) : pageRedirect.somethingWentWrong();
     }
 
     /*
@@ -53,18 +57,21 @@ public class CourseController {
     * Get Course by Id
     *
     * */
-//    @GetMapping("id")
-//    public String getCourseById(Long courseId, Model model) {
-//
-//        return "";
-//    }
+    @GetMapping("view-course")
+    public String getCourseById(Long courseId, Model model) {
+        model.addAttribute("departments",departmentService.getAllDepartment());
+        model.addAttribute("currentCourse",courseService.getCourseById(courseId));
+        model.addAttribute("defaultDepartmentId", courseService.getCourseById(courseId).getDepartmentId());
+
+        return pageRedirect.viewCourse(model);
+    }
 
     /*
     *
     * Get All Courses
     *
     * */
-    @GetMapping("courses")
+//    @RequestMapping("courses")
     public String getAllCourses(org.springframework.ui.Model model){
         return pageRedirect.getAllCourses(model);
     }

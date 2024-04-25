@@ -19,9 +19,6 @@ public class Course {
     @Column(name = "name")
     private String courseName;
 
-    @Column(name = "credits")
-    private Long courseCredits;
-
     @Column(name = "dept_id")
     private Long departmentId;
 

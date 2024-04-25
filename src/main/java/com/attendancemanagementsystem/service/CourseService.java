@@ -63,9 +63,6 @@ public class CourseService {
             dbCourse.setDepartmentId(
                     updatedCourse.getDepartmentId()
             );
-            dbCourse.setCourseCredits(
-                    updatedCourse.getCourseCredits()
-            );
             dbCourse.setDepartmentName(
                     departmentRepository.findById(updatedCourse.getDepartmentId())
                                         .get()
