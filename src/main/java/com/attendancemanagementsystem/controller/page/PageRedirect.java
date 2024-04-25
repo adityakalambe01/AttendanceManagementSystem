@@ -1,11 +1,13 @@
 package com.attendancemanagementsystem.controller.page;
 
+import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.entity.Department;
 import com.attendancemanagementsystem.service.CourseService;
 import com.attendancemanagementsystem.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -66,9 +68,23 @@ public class PageRedirect {
     }
 
     //Courses
+    @RequestMapping("courses")
     public String getAllCourses(Model model){
         model.addAttribute("allCourses",courseService.getAllCourse());
         return "admin/courses/AllCourses";
+    }
+
+    @GetMapping("addCourse")
+    public String addCourse(Model model){
+        model.addAttribute("departments",departmentService.getAllDepartment());
+        return "admin/courses/AddCourse";
+    }
+
+//    @GetMapping("view-course")
+    public String viewCourse(Model model){
+//        Course course = courseService.getCourseById(courseId);
+
+        return "admin/courses/ViewCourse";
     }
 
     //faculty
