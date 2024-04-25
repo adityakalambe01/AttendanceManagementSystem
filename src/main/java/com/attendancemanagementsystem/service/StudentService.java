@@ -2,6 +2,7 @@ package com.attendancemanagementsystem.service;
 
 import com.attendancemanagementsystem.customexceptions.StudentException;
 import com.attendancemanagementsystem.entity.Student;
+import com.attendancemanagementsystem.repository.DepartmentRepository;
 import com.attendancemanagementsystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 public class StudentService {
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     /*
     *
@@ -48,6 +52,39 @@ public class StudentService {
             System.out.println(studentException.getMessage());
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    /*
+    *
+    * Update Student
+    *
+    * */
+    public boolean updateStudent(Long studentID, Student updatedStudent){
+        if (studentRepository.existsById(studentID)){
+
+            Student oldStudent = studentRepository.findById(studentID).get();
+            oldStudent.setStudentName(
+                    updatedStudent.getStudentName()
+            );
+            oldStudent.setStudentEmailId(
+                    updatedStudent.getStudentEmailId()
+            );
+            oldStudent.setDepartmentId(
+                    updatedStudent.getDepartmentId()
+            );
+            oldStudent.setDepartmentName(
+                    departmentRepository.findById(updatedStudent.getDepartmentId())
+                                        .get()
+                                        .getDepartmentName()
+            );
+
+            studentRepository.save(oldStudent);
+
+
+            return true;
         }
 
         return false;

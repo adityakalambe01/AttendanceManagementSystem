@@ -23,5 +23,8 @@ public class Student {
     private String studentEmailId;
 
     @Column(name = "dept_id")
-    private String departmentId;
+    private Long departmentId;
+
+    @Column(name = "dept_name")
+    private String departmentName;
 }
