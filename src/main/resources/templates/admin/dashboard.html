@@ -122,10 +122,11 @@
 <div class="sidebar">
     <h2 onclick="toggleDarkMode()" id="admin_dashboard" th:text="${adminName}"></h2>
     <ul>
+        <li><a href="adminDashboard">Dashboard</a></li>
         <li><a href="departments">Departments</a></li>
         <li><a href="courses">Courses</a></li>
-        <li><a href="#faculty">Faculty</a></li>
-        <li><a href="#students">Students</a></li>
+        <!--<li><a href="#faculty">Faculty</a></li>-->
+        <li><a href="students">Students</a></li>
         <li><a href="#attendance">Attendance</a></li>
     </ul>
 </div>
@@ -148,16 +149,17 @@
     </section>
 
     <!-- Faculty Section -->
-    <section id="faculty">
+    <!--<section id="faculty">
         <h2>Faculty</h2>
-        <!-- Add content related to faculty here -->
+        &lt;!&ndash; Add content related to faculty here &ndash;&gt;
         <div class="total-count" id="faculty-count">0</div>
-    </section>
+    </section>-->
 
     <!-- Students Section -->
     <section id="students">
         <h2>Students</h2>
         <!-- Add content related to students here -->
+        <div class="total-count" id="student-count" th:text="${totalStudents}"></div>
     </section>
 
     <!-- Attendance Section -->

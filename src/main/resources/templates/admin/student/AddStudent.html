@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,6 @@
             text-align: center;
             cursor: pointer;
             width: 100%;
-            /*height: 100%;*/
             letter-spacing: 3px;
         }
 
@@ -73,15 +72,61 @@
         .dark-mode .sidebar a:hover {
             background-color: #555;
         }
+
+        /* Form styles */
+        .form-container {
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container.light-mode {
+            background-color: #f2f2f2;
+        }
+
+        .form-container.dark-mode {
+            background-color: #333;
+        }
+
+        .form-container input[type=text], .form-container input[type=number], .input-group {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-container input[type=text]:focus, .form-container input[type=number]:focus, .input-group:focus {
+            outline: none;
+            border-color: #6f6fdb;
+        }
+
+        .form-container input[type=submit] {
+            background-color: #6f6fdb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-container input[type=submit]:hover {
+            background-color: #555;
+        }
+
+
     </style>
 </head>
 <body>
 <div class="sidebar">
     <h2 onclick="toggleDarkMode()" id="admin_dashboard">Admin</h2>
     <ul>
+        <li><a href="adminDashboard">Dashboard</a></li>
         <li><a href="departments">Departments</a></li>
         <li><a href="courses">Courses</a></li>
-        <li><a href="faculty">Faculty</a></li>
+        <!--        <li><a href="faculty">Faculty</a></li>-->
         <li><a href="students">Students</a></li>
         <li><a href="attendance">Attendance</a></li>
     </ul>
@@ -89,13 +134,37 @@
 
 <div class="content">
     <!-- Your content goes here -->
-    <h2>Welcome to the Admin Dashboard!</h2>
-    <p>Select an option from the sidebar to get started.</p>
+    <h2>Add New Course</h2>
+
+    <!-- Form for adding a new department -->
+    <div class="form-container light-mode">
+        <form id="addDepartmentForm" method="post" >
+            <label for="courseName">Course Name:</label><br>
+            <input type="text" id="courseName" name="courseName" required><br>
+
+            <div >
+                <label for="departmentId">Department Name:</label>
+                <select id="departmentId" name="departmentId" class="input-group" style="width: 100% !important;" required>
+                    <!-- Populate this dropdown with department options from your backend -->
+                    <option value="">Select Department</option>
+                    <!-- Use Thymeleaf to iterate over departments -->
+                    <option th:each="department : ${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Add Course" formaction="course-added">
+
+        </form>
+    </div>
 </div>
 
 <script>
     function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
+        var body = document.body;
+        var formContainer = document.querySelector('.form-container');
+        body.classList.toggle('dark-mode');
+        formContainer.classList.toggle('dark-mode');
+        formContainer.classList.toggle('light-mode');
     }
 </script>
 </body>

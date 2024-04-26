@@ -4,6 +4,7 @@ import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.entity.Department;
 import com.attendancemanagementsystem.service.CourseService;
 import com.attendancemanagementsystem.service.DepartmentService;
+import com.attendancemanagementsystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class PageRedirect {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    StudentService studentService;
 
 
     @RequestMapping({"", "/"})
@@ -43,7 +47,12 @@ public class PageRedirect {
     //dashboard main
     @RequestMapping({"adminDashboard","dashboardAdmin"})
     public String adminDashboard(Model model){
-        model.addAttribute("totalDepartments",departmentService.getAllDepartment().stream().count());
+        model.addAttribute("totalDepartments", (long) departmentService.getAllDepartment().size());
+
+        model.addAttribute("totalCourses", (long) courseService.getAllCourse().size());
+
+        model.addAttribute("totalStudents",(long) studentService.getAllStudent().size());
+
         return "admin/dashboard";
     }
 
@@ -104,9 +113,15 @@ public class PageRedirect {
         return "admin/student/AddStudent";
     }
 
-    @RequestMapping({"viewStudent","showStudent","view_stud"})
+    @RequestMapping({"viewStudent","showStudent","view_stud","view-student"})
     public String viewStudent(){
         return "admin/student/ViewStudent";
+    }
+
+    @RequestMapping({"students","list-student","student-list"})
+    public String listStudent(Model model){
+        model.addAttribute("students", studentService.getAllStudent());
+        return "admin/student/AllStudents";
     }
 
 

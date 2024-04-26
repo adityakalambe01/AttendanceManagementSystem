@@ -7,6 +7,8 @@ import com.attendancemanagementsystem.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentService {
     @Autowired
@@ -41,17 +43,9 @@ public class StudentService {
     *
     * */
     public boolean deleteStudent(Long studentId){
-        try {
-            if (studentRepository.existsById(studentId)){
-                studentRepository.deleteById(studentId);
-                return true;
-            }else {
-                throw new StudentException("Student not found");
-            }
-        }catch (StudentException studentException){
-            System.out.println(studentException.getMessage());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        if (studentRepository.existsById(studentId)){
+            studentRepository.deleteById(studentId);
+            return true;
         }
 
         return false;
@@ -88,6 +82,27 @@ public class StudentService {
         }
 
         return false;
+    }
+
+    /*
+    *
+    * All Students
+    *
+    * */
+    public List<Student> getAllStudent(){
+        return studentRepository.findAll();
+    }
+
+    /*
+    *
+    * Student by Id
+    *
+    * */
+    public Student getStudentById(Long studentId){
+        if (studentRepository.existsById(studentId)){
+            return studentRepository.findById(studentId).get();
+        }
+        return null;
     }
 
     /*

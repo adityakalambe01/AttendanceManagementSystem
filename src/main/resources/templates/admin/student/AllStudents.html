@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -70,6 +71,10 @@
             background-color: #333;
         }
 
+        .dark-mode .sidebar a {
+            color: #ddd;
+        }
+
         .dark-mode .sidebar a:hover {
             background-color: #555;
         }
@@ -93,28 +98,124 @@
         .department-button:hover {
             background-color: #45a049;
         }
+
+        /* Department table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: black;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dark-mode table {
+            color: white;
+        }
+
+        .dark-mode th {
+            background-color: #333;
+            color: white;
+        }
+
+        .dark-mode tr:hover {
+            background-color: #444;
+        }
+
+        .action-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 5px;
+        }
+
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-mode .action-buttons button {
+            background-color: #0056b3;
+        }
+
+        .dark-mode .action-buttons button:hover {
+            background-color: #007bff;
+        }
     </style>
 </head>
 <body>
 <div class="sidebar">
     <h2 onclick="toggleDarkMode()" id="admin_dashboard">Admin</h2>
     <ul>
+        <li><a href="adminDashboard">Dashboard</a></li>
         <li><a href="departments">Departments</a></li>
         <li><a href="courses">Courses</a></li>
-        <li><a href="faculty">Faculty</a></li>
+<!--        <li><a href="faculty">Faculty</a></li>-->
         <li><a href="students">Students</a></li>
         <li><a href="attendance">Attendance</a></li>
     </ul>
-
 </div>
 
 <div class="content">
     <!-- Your content goes here -->
-    <h2>Welcome to the Admin Dashboard!</h2>
-    <p>Select an option from the sidebar to get started.</p>
+    <h2>Student List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Sr No</th>
+            <th>Student Name</th>
+            <th>Email Id</th>
+            <th>Department Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student, studentIndex : ${students}">
+            <td th:text="${studentIndex.count}"></td>
+
+            <td th:text="${student.studentName}"></td>
+            <td th:text="${student.studentEmailId}"></td>
+            <td th:text="${student.departmentName}"></td>
+
+            <td class="action-buttons">
+                <form method="get">
+                    <input type="hidden" name="studentId" th:value="${student.studentId}">
+
+                    <button class="btn btn-view" type="submit" formaction="view-student" title="View Student" style="background-color: green">
+                        <i class="fas fa-eye"></i>
+                    </button>
+
+                    <button class="btn btn-delete" type="submit" formaction="delete-student" title="Delete Student" style="background-color: red">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <!-- Add more rows for each department -->
+        </tbody>
+    </table>
 </div>
+
 <!-- Department button -->
-<button class="department-button">Add Student</button>
+<form action="addStudent" method="get">
+    <input type="submit" class="department-button" value="Add Student" style="position: fixed !important;" >
+</form>
+
 <script>
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
