@@ -109,7 +109,8 @@ public class PageRedirect {
 
     //student
     @RequestMapping({"addStudent","addNewStudent","newStudent","new_stud"})
-    public String addNewStudent(){
+    public String addNewStudent(Model model){
+        model.addAttribute("departments", departmentService.getAllDepartment());
         return "admin/student/AddStudent";
     }
 
@@ -126,13 +127,25 @@ public class PageRedirect {
 
 
 
+    /*
+    *
+    * Student Attendance
+    *
+    * */
+    @RequestMapping({"attendance"})
+    public String attendancePage(){
+        return "admin/attendance/AllAttendance";
+    }
+
+
+
 
 
 
 //
     @RequestMapping("userSignUp")
     public String userSignUpPage(){
-        return "signup";
+        return "student/signup";
     }
 
     @RequestMapping("userSignIn")
@@ -140,12 +153,21 @@ public class PageRedirect {
         return "signin";
     }
 
-    @RequestMapping("welcomePage")
-    public String welcomePage(){
-        return "welcome";
+    @RequestMapping("student-dashboard")
+    public String studentDashboard(Model model){
+        return "student/dashboard";
     }
 
 
+    /*
+    *
+    * Student Pages
+    *
+    * */
+    @RequestMapping({"student-department","department-of-students"})
+    public String studentDepartment(Model model){
+        return null;
+    }
 
 
     @RequestMapping("something-went-wrong")

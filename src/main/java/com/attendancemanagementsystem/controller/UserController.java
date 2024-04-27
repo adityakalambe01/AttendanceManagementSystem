@@ -62,7 +62,7 @@ public class UserController {
                 return redirect.adminDashboard(model);
             //student dashboard
             else
-                return redirect.adminDashboard(model);
+                return redirect.studentDashboard(model);
         }else {
             //wrong password entered
             return redirect.userSignInPage();

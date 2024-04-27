@@ -58,7 +58,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Admin Signup</h2>
+    <h2>Student Signup</h2>
     <form id="signupForm" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>
@@ -77,9 +77,9 @@
             <input type="password" id="password" name="userPassword" required>
         </div>
         <label>
-            <input type="text" name="userRole" value="Student" style="display: none">
+            <input type="hidden" name="userRole" value="Student" style="display: none">
         </label>
-        <input type="submit" value="Sign Up" formaction="users/signUp">
+        <input type="submit" value="Sign Up" formaction="signUp">
 
 
     </form>
