@@ -4,6 +4,7 @@ import com.attendancemanagementsystem.customexceptions.StudentException;
 import com.attendancemanagementsystem.entity.Student;
 import com.attendancemanagementsystem.repository.DepartmentRepository;
 import com.attendancemanagementsystem.repository.StudentRepository;
+import com.attendancemanagementsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class StudentService {
 
     @Autowired
     DepartmentRepository departmentRepository;
+
+    @Autowired
+    UserService userService;
 
     /*
     *
@@ -44,7 +48,12 @@ public class StudentService {
     * */
     public boolean deleteStudent(Long studentId){
         if (studentRepository.existsById(studentId)){
-            studentRepository.deleteById(studentId);
+            if (userService.deleteUser(
+                    userService.getUserByEmailId(
+                            studentRepository.findById(studentId).get().getStudentEmailId()
+                    ).getUserId()
+            ))
+                studentRepository.deleteById(studentId);
             return true;
         }
 

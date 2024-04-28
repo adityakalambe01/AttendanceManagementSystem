@@ -89,7 +89,7 @@
             background-color: #333;
         }
 
-        .form-container input[type=text], .form-container input[type=number], .input-group {
+        .form-container input[type=text], .form-container input[type=number], .input-group, .form-container input[type=password]{
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
@@ -97,7 +97,7 @@
             border-radius: 3px;
         }
 
-        .form-container input[type=text]:focus, .form-container input[type=number]:focus, .input-group:focus {
+        .form-container input[type=text]:focus, .form-container input[type=number]:focus, .input-group:focus, .form-container input[type=password]:focus {
             outline: none;
             border-color: #6f6fdb;
         }
@@ -134,27 +134,37 @@
 
 <div class="content">
     <!-- Your content goes here -->
-    <h2>View / Update Course</h2>
+    <h2>Add New Student</h2>
 
     <!-- Form for adding a new department -->
     <div class="form-container light-mode">
         <form id="addDepartmentForm" method="post" >
-            <input type="hidden" name="courseId" th:value="${currentCourse.courseId}" style="display: none">
+            <label for="userFullName">Full Name:</label><br>
+            <input type="text" id="userFullName" name="userFullName" required><br>
 
-            <label for="courseName">Course Name:</label><br>
-            <input type="text" id="courseName" name="courseName" th:value="${currentCourse.courseName}" required><br>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
 
-            <div>
-                <label for="departmentId">Department:</label>
+            <label for="userEmailId">Email Id:</label><br>
+            <input type="text" id="userEmailId" name="userEmailId" required><br>
+
+            <!--            <label for="userRole">Full Name:</label><br>-->
+            <input type="hidden" id="userRole" name="userRole" value="Student" style="display: none">
+
+            <!--<label for="userPassword">Password:</label><br>
+            <input type="password" id="userPassword" name="userPassword" required><br>
+-->
+            <div >
+                <label for="departmentId">Department Name:</label>
                 <select id="departmentId" name="departmentId" class="input-group" style="width: 100% !important;" required>
                     <!-- Populate this dropdown with department options from your backend -->
                     <option value="">Select Department</option>
                     <!-- Use Thymeleaf to iterate over departments -->
-                    <option th:each="department : ${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}" th:selected="${department.departmentId == defaultDepartmentId}"></option>
+                    <option th:each="department : ${departments}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
                 </select>
             </div>
 
-            <input type="submit" value="Update Course" formaction="course-added">
+            <input type="submit" value="Add Student" formaction="new-student-added">
 
         </form>
     </div>

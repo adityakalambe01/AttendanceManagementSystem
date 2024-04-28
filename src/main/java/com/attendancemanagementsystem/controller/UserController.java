@@ -29,7 +29,7 @@ public class UserController {
     * */
 
 
-    @PostMapping("signUp")
+    @PostMapping({"signUp"})
     public String addNewUser(User newUser){
         if(userService.addNewUser(newUser)){
             return "index";
@@ -123,5 +123,6 @@ public class UserController {
         List<User> userList = userService.getUserByRole(role);
         return "";
     }
+
 
 }

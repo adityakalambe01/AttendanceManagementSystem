@@ -2,13 +2,17 @@ package com.attendancemanagementsystem.controller.page;
 
 import com.attendancemanagementsystem.entity.Course;
 import com.attendancemanagementsystem.entity.Department;
+import com.attendancemanagementsystem.entity.Student;
+import com.attendancemanagementsystem.entity.User;
 import com.attendancemanagementsystem.service.CourseService;
 import com.attendancemanagementsystem.service.DepartmentService;
 import com.attendancemanagementsystem.service.StudentService;
+import com.attendancemanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,6 +25,9 @@ public class PageRedirect {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    UserService userService;
 
 
     @RequestMapping({"", "/"})
@@ -114,6 +121,41 @@ public class PageRedirect {
         return "admin/student/AddStudent";
     }
 
+    @PostMapping("new-student-added")
+    public String newStudentAdded(
+            String userFullName,
+            String username,
+            String userEmailId,
+            String userRole,
+            String userPassword,
+            Long departmentId,
+            Model model
+    ){
+        //User
+        User user = new User();
+        user.setUserFullName(userFullName);
+        user.setUsername(username);
+        user.setUserEmailId(userEmailId);
+        user.setUserRole(userRole);
+        user.setUserPassword(userPassword);
+
+        //Student
+        Student student = new Student();
+        student.setStudentName(userFullName);
+        student.setStudentEmailId(userEmailId);
+        student.setDepartmentId(departmentId);
+        student.setDepartmentName(
+                departmentService.getDepartmentById(departmentId).getDepartmentName()
+        );
+
+        if (userService.addNewUser(user))
+            System.out.println(user);
+        if (studentService.addNewStudent(student))
+            System.out.println(student);
+
+        return this.listStudent(model);
+    }
+
     @RequestMapping({"viewStudent","showStudent","view_stud","view-student"})
     public String viewStudent(){
         return "admin/student/ViewStudent";
@@ -153,10 +195,7 @@ public class PageRedirect {
         return "signin";
     }
 
-    @RequestMapping("student-dashboard")
-    public String studentDashboard(Model model){
-        return "student/dashboard";
-    }
+
 
 
     /*
@@ -164,9 +203,20 @@ public class PageRedirect {
     * Student Pages
     *
     * */
+    @RequestMapping("student-dashboard")
+    public String studentDashboard(Model model){
+
+        return "student/dashboard";
+    }
     @RequestMapping({"student-department","department-of-students"})
     public String studentDepartment(Model model){
-        return null;
+        model.addAttribute("studentDepartment");
+        return "student/department";
+    }
+    @RequestMapping("enrolled-courses")
+    public String enrolledCourses(Model model){
+        model.addAttribute("enrolledCourses","enrolledCourses");
+        return "student/EnrolledCourses";
     }
 
 

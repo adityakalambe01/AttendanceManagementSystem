@@ -129,9 +129,16 @@ public class UserService {
     * User Login
     *
     * */
-
     public User userLogin(User user){
 //        return userRepository.findByUserEmailId(user.getUserEmailId());
         return userRepository.findByUsername(user.getUsername());
+    }
+
+    public boolean deleteUserByEmailId(String emailId){
+        return userRepository.deleteByEmailId(emailId);
+    }
+
+    public User getUserByEmailId(String emailId){
+        return userRepository.findByUserEmailId(emailId);
     }
 }
